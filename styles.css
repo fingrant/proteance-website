@@ -1169,6 +1169,39 @@ body {
     background: var(--bg-light);
 }
 
+.process-diagram {
+    text-align: center;
+    margin: 50px 0;
+    padding: 40px;
+    background: var(--bg-light);
+    border-radius: 12px;
+}
+
+.process-diagram h3 {
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 30px;
+}
+
+.process-image {
+    max-width: 900px;
+    margin: 0 auto 25px;
+}
+
+.process-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.process-description {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    font-style: italic;
+    margin-top: 20px;
+}
+
 /* ============================================
    ANIMATIONS
    ============================================ */
