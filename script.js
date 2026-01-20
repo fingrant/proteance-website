@@ -110,13 +110,12 @@ if (contactForm) {
             message: formData.get('message')
         };
         
-        // For now, just show a success message
-        // In production, you would send this to a backend API or Azure Function
-        showFormMessage('Thank you for your message! We will get back to you soon.', 'success');
-        contactForm.reset();
+        // Disable submit button and show loading state
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Sending...';
         
-        // Example: Send to Azure Function or API
-        /*
         try {
             const response = await fetch('/api/contact', {
                 method: 'POST',
@@ -126,16 +125,21 @@ if (contactForm) {
                 body: JSON.stringify(data)
             });
             
-            if (response.ok) {
-                showFormMessage('Thank you for your message! We will get back to you soon.', 'success');
+            const result = await response.json();
+            
+            if (response.ok && result.success) {
+                showFormMessage(result.message, 'success');
                 contactForm.reset();
             } else {
-                showFormMessage('Something went wrong. Please try again.', 'error');
+                showFormMessage(result.error || 'Something went wrong. Please try again.', 'error');
             }
         } catch (error) {
-            showFormMessage('Unable to send message. Please try again later.', 'error');
+            showFormMessage('Unable to send message. Please try again later or email us directly at info@proteance.com', 'error');
+        } finally {
+            // Re-enable submit button
+            submitButton.disabled = false;
+            submitButton.textContent = originalButtonText;
         }
-        */
     });
 }
 

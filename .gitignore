@@ -16,6 +16,8 @@ Thumbs.db
 
 # Azure
 .azure/
+api/local.settings.json
+api/node_modules/
 
 # Temp files
 *.log

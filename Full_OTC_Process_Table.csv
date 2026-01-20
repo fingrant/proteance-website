@@ -1,0 +1,31 @@
+Process Name,Step Description,Department/Role,Trigger/Condition,Action to be Taken,Next Step,System Reference,Entity,Automation Required?
+OTC - Parts Sales,Customer wants to buy a part,Customer,,Starting point of process,P01,,Entry point to OTC process,No
+OTC - Parts Sales,Verify if credit customer,OTC-Sales Person,,Check customer account type,P03,Autoline,Credit_Check,Yes
+OTC - Parts Sales,Credit customer?,OTC-Sales Person,,Determine payment type path,"P04, P14", ,Payment_Type,No
+OTC - Parts Sales,Verify current credit status,OTC-Sales Person,,Check account standing,P05,Autoline,Credit_Status,Yes
+OTC - Parts Sales,Credit status OK?,OTC-Sales Person,,Determine if credit limits allow purchase,"P06, P14", ,Credit_Approved,No
+OTC - Parts Sales,Print picking list/requisition slip,OTC-Sales Person,,Generate document for warehouse,P07,Autoline,Document_Generation,Yes
+OTC - Parts Sales,Pick part,OTC-Sales Person,,Retrieve items from inventory,P08, ,Inventory_Action,No
+OTC - Parts Sales,Create credit invoice,OTC-Sales Person,,Generate invoice for credit customer,P09,Autoline,Invoice_Creation,Yes
+OTC - Parts Sales,Hand over to customer,OTC-Sales Person,,Deliver part and documentation,P10, ,Customer_Handoff,No
+OTC - Parts Sales,Single invoice or batch?,Billing Clerk,,Determine invoice processing method,"P11, P12", ,Invoice_Processing,No
+OTC - Parts Sales,Process single invoice,Billing Clerk,,Handle as individual transaction,P13,Autoline,Single_Invoice,Yes
+OTC - Parts Sales,Create batch invoice,Billing Clerk,,Compile for periodic billing,P13,Autoline,Batch_Invoice,Yes
+OTC - Parts Sales,Check document,Billing Clerk,,Verify invoice accuracy,P30, ,Document_Verification,No
+OTC - Parts Sales,Create cash invoice,OTC-Sales Person,,Generate cash sale documentation,P15,Autoline,Invoice_Creation,Yes
+OTC - Parts Sales,Hand over to customer,OTC-Sales Person,,Deliver invoice and part,P16, ,Customer_Handoff,No
+OTC - Parts Sales,Payment method,Cashier,,Determine type of payment,"P17, P19, P21", ,Payment_Method,No
+OTC - Parts Sales,Process cash payment,Cashier,,Handle physical currency,P18, ,Cash_Handling,No
+OTC - Parts Sales,Register payment,Cashier,,Record transaction in system,P30,Autoline,Payment_Recording,Yes
+OTC - Parts Sales,Process card payment,Cashier,,Handle credit/debit card,P20, ,Card_Processing,No
+OTC - Parts Sales,Register payment method,Cashier,,Record transaction type,P30,Autoline,Payment_Recording,Yes
+OTC - Parts Sales,Process alternative payment,Cashier,,"Handle check, transfer, etc.",P20, ,Alt_Payment,No
+OTC - Parts Sales,Discount applicable?,OTC-Sales Person,,Determine if price reduction applies,"P23, P25", ,Discount_Check,No
+OTC - Parts Sales,Define discount code,OTC-Sales Person,,Apply appropriate discount,P24,Autoline,Discount_Application,Yes
+OTC - Parts Sales,Changes of discount?,OTC-Sales Person,,Check if discount requires approval,"P25, P26", ,Discount_Approval,No
+OTC - Parts Sales,Finalize transaction,OTC-Sales Person,,Complete the sale process,P30,Autoline,Transaction_Completion,Yes
+OTC - Parts Sales,Review discount change,Billing Clerk,,Evaluate discount modification,P27, ,Discount_Review,No
+OTC - Parts Sales,Approve discount?,Billing Clerk,,Determine if discount is authorized,"P25, P28", ,Approval_Decision,No
+OTC - Parts Sales,Adjust discount,Billing Clerk,,Modify discount parameters,P25,Autoline,Discount_Adjustment,Yes
+OTC - Parts Sales,Inform accountant,OTC-Sales Person,,Notify of special transaction,P30, ,Accounting_Notification,No
+OTC - Parts Sales,End of payment process,Customer,,Completion of transaction,, ,Process_End,No

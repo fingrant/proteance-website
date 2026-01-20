@@ -1,0 +1,16 @@
+{
+  "name": "proteance-api",
+  "version": "1.0.0",
+  "description": "Azure Function API for Proteance website contact form",
+  "scripts": {
+    "start": "func start",
+    "test": "echo \"No tests yet\""
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "@sendgrid/mail": "^8.1.0"
+  },
+  "devDependencies": {
+    "@azure/functions": "^4.0.0"
+  }
+}
