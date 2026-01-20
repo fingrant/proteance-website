@@ -1205,6 +1205,73 @@ body {
 /* ============================================
    ANIMATIONS
    ============================================ */
+.bulb-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.animated-bulb {
+    width: 80px;
+    height: 80px;
+    animation: flickerOn 2s ease-in-out forwards;
+}
+
+@keyframes flickerOn {
+    0% {
+        opacity: 0;
+        filter: brightness(0.3);
+    }
+    10% {
+        opacity: 0.4;
+        filter: brightness(0.5);
+    }
+    15% {
+        opacity: 0;
+        filter: brightness(0.2);
+    }
+    25% {
+        opacity: 0.6;
+        filter: brightness(0.7);
+    }
+    30% {
+        opacity: 0.2;
+        filter: brightness(0.3);
+    }
+    40% {
+        opacity: 0.8;
+        filter: brightness(0.9);
+    }
+    45% {
+        opacity: 0.3;
+        filter: brightness(0.4);
+    }
+    55% {
+        opacity: 0.9;
+        filter: brightness(1);
+    }
+    60% {
+        opacity: 0.5;
+        filter: brightness(0.6);
+    }
+    70% {
+        opacity: 1;
+        filter: brightness(1.1);
+    }
+    75% {
+        opacity: 0.8;
+        filter: brightness(0.9);
+    }
+    85% {
+        opacity: 1;
+        filter: brightness(1.2);
+    }
+    100% {
+        opacity: 1;
+        filter: brightness(1);
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
