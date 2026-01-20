@@ -917,6 +917,38 @@ body {
     margin-bottom: 15px;
 }
 
+.linkedin-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: var(--bg-white);
+    border: 2px solid #0077b5;
+    border-radius: 6px;
+    color: #0077b5;
+    text-decoration: none;
+    font-weight: var(--font-weight-semibold);
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.linkedin-link:hover {
+    background: #0077b5;
+    color: var(--text-white);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.linkedin-link:hover svg {
+    fill: var(--text-white);
+}
+
+.linkedin-link svg {
+    width: 20px;
+    height: 20px;
+    transition: fill 0.3s ease;
+}
+
 .nav-menu a.active {
     color: var(--primary-color);
 }
