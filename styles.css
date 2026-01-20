@@ -558,6 +558,74 @@ body {
 }
 
 /* ============================================
+   PRODUCTS GRID
+   ============================================ */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.product-card {
+    background: var(--bg-white);
+    padding: 50px 40px;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.product-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.product-logo {
+    width: 200px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.product-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.product-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-bold);
+}
+
+.product-tagline {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 20px;
+}
+
+.product-description {
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.product-card .btn {
+    margin-top: auto;
+}
+
+/* ============================================
    CTA SECTION
    ============================================ */
 .cta-section {
@@ -964,6 +1032,144 @@ body {
 }
 
 /* ============================================
+   WIN-LOSS PAGE STYLES
+   ============================================ */
+.winloss-hero {
+    background: linear-gradient(135deg, #1a472a 0%, #0d2818 100%);
+}
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.insight-card {
+    background: var(--bg-white);
+    padding: 40px 30px;
+    border-radius: 12px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.insight-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.insight-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.insight-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-semibold);
+}
+
+.insight-card p {
+    color: var(--text-light);
+    line-height: 1.8;
+}
+
+.differentiators-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.differentiator-card {
+    background: var(--bg-light);
+    padding: 35px 30px;
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.differentiator-card:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-md);
+}
+
+.differentiator-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-semibold);
+}
+
+.differentiator-card p {
+    color: var(--text-light);
+    line-height: 1.8;
+}
+
+.feature-highlight {
+    background: var(--bg-light);
+    padding: 40px;
+    border-radius: 12px;
+    margin: 30px 0;
+    border-left: 4px solid var(--primary-color);
+}
+
+.feature-highlight h3 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-semibold);
+}
+
+.feature-list {
+    list-style: none;
+    padding: 0;
+}
+
+.feature-list li {
+    padding: 12px 0 12px 35px;
+    position: relative;
+    color: var(--text-light);
+    line-height: 1.7;
+}
+
+.feature-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.highlight-text {
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.8;
+    margin: 30px 0;
+    padding: 25px;
+    background: var(--bg-light);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary-color);
+}
+
+.winloss-intro,
+.winloss-how,
+.winloss-insights,
+.winloss-integration,
+.winloss-different {
+    background: var(--bg-white);
+}
+
+.winloss-different {
+    background: var(--bg-light);
+}
+
+/* ============================================
    ANIMATIONS
    ============================================ */
 @keyframes fadeIn {
@@ -1006,6 +1212,10 @@ body {
     }
     
     .team-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .products-grid {
         grid-template-columns: 1fr;
     }
     
