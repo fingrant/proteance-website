@@ -1,5 +1,5 @@
 const { app } = require('@azure/functions');
-const sgMail = require('@sendgrid/mail');
+const { EmailClient } = require('@azure/communication-email');
 
 app.http('contact', {
     methods: ['POST'],
@@ -35,11 +35,12 @@ app.http('contact', {
                 };
             }
 
-            // Get SendGrid API key from environment variables
-            const sendGridApiKey = process.env.SENDGRID_API_KEY;
+            // Get Azure Communication Services connection string from environment variables
+            const connectionString = process.env.AZURE_COMMUNICATION_CONNECTION_STRING;
+            const senderAddress = process.env.AZURE_COMMUNICATION_SENDER_ADDRESS;
             
-            if (!sendGridApiKey) {
-                context.error('SendGrid API key not configured');
+            if (!connectionString || !senderAddress) {
+                context.error('Azure Communication Services not configured');
                 return {
                     status: 500,
                     jsonBody: {
@@ -49,16 +50,15 @@ app.http('contact', {
                 };
             }
 
-            // Configure SendGrid
-            sgMail.setApiKey(sendGridApiKey);
+            // Create email client
+            const emailClient = new EmailClient(connectionString);
 
             // Prepare email content
-            const emailContent = {
-                to: 'info@proteance.com',
-                from: 'noreply@proteance.com', // You'll need to verify this sender in SendGrid
-                replyTo: email,
-                subject: `New Contact Form Submission from ${name}`,
-                text: `
+            const emailMessage = {
+                senderAddress: senderAddress,
+                content: {
+                    subject: `New Contact Form Submission from ${name}`,
+                    plainText: `
 New contact form submission:
 
 Name: ${name}
@@ -70,27 +70,33 @@ ${message}
 
 ---
 Sent from Proteance website contact form
-                `.trim(),
-                html: `
-                    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-                        <h2 style="color: #1a1a1a;">New Contact Form Submission</h2>
-                        <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                            <p><strong>Name:</strong> ${name}</p>
-                            <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-                            <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+                    `.trim(),
+                    html: `
+                        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                            <h2 style="color: #1a1a1a;">New Contact Form Submission</h2>
+                            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                                <p><strong>Name:</strong> ${name}</p>
+                                <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
+                                <p><strong>Company:</strong> ${company || 'Not provided'}</p>
+                            </div>
+                            <div style="margin: 20px 0;">
+                                <h3 style="color: #1a1a1a;">Message:</h3>
+                                <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
+                            </div>
+                            <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;">
+                            <p style="color: #666; font-size: 12px;">Sent from Proteance website contact form</p>
                         </div>
-                        <div style="margin: 20px 0;">
-                            <h3 style="color: #1a1a1a;">Message:</h3>
-                            <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
-                        </div>
-                        <hr style="border: none; border-top: 1px solid #e0e0e0; margin: 30px 0;">
-                        <p style="color: #666; font-size: 12px;">Sent from Proteance website contact form</p>
-                    </div>
-                `.trim()
+                    `.trim()
+                },
+                recipients: {
+                    to: [{ address: 'info@proteance.com' }]
+                },
+                replyTo: [{ address: email }]
             };
 
             // Send email
-            await sgMail.send(emailContent);
+            const poller = await emailClient.beginSend(emailMessage);
+            await poller.pollUntilDone();
 
             context.log(`Contact form email sent successfully from ${email}`);
 
@@ -104,11 +110,6 @@ Sent from Proteance website contact form
 
         } catch (error) {
             context.error('Error processing contact form:', error);
-
-            // Handle SendGrid specific errors
-            if (error.response) {
-                context.error('SendGrid error:', error.response.body);
-            }
 
             return {
                 status: 500,
