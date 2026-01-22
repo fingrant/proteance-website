@@ -1169,6 +1169,37 @@ body {
     background: var(--bg-light);
 }
 
+/* ============================================
+   DIBOP ANIMATION
+   ============================================ */
+.dibop-animation-section {
+    text-align: center;
+    margin: 60px 0;
+    padding: 40px 0;
+}
+
+.dibop-animation-section h2,
+.dibop-animation-section h3 {
+    font-size: 2rem;
+    color: var(--text-dark);
+    font-weight: var(--font-weight-semibold);
+    margin-bottom: 40px;
+}
+
+.animation-container {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.animation-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
 .process-diagram {
     text-align: center;
     margin: 50px 0;
