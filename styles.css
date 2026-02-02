@@ -771,10 +771,24 @@ body {
     margin-bottom: 40px;
 }
 
-.footer-brand img {
-    height: 50px;
-    margin-bottom: 20px;
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.footer-logo {
+    height: 40px;
+    margin-bottom: 10px;
     filter: brightness(0) invert(1);
+}
+
+.footer-brand-name {
+    font-size: 20px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.15em;
+    color: var(--text-white);
+    margin-bottom: 15px;
 }
 
 .footer-brand p {

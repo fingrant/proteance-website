@@ -7,7 +7,7 @@ dist/
 build/
 
 # IDE
-.vscode/
+
 .idea/
 
 # OS
