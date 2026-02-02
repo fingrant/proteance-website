@@ -82,9 +82,22 @@ body {
     padding: 15px 0;
 }
 
-.logo img {
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-mark {
     height: 50px;
     width: auto;
+}
+
+.brand-name {
+    font-size: 24px;
+    font-weight: var(--font-weight-bold);
+    letter-spacing: 0.15em;
+    color: var(--text-dark);
 }
 
 .nav-menu {
