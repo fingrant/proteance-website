@@ -1,0 +1,2849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMDA — Dealer-Owned Integration Platform | Powered by DIBOP</title>
+    <meta name="description" content="OMDA is the dealer-owned execution layer that connects OEM APIs, DMS, CRM, and enterprise systems through one intelligent integration backbone. Powered by the DIBOP engine.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* ============================================
+           DESIGN SYSTEM — CSS Custom Properties
+           ============================================ */
+        :root {
+            --midnight: #080F1E;
+            --navy: #0C1829;
+            --navy-light: #111E33;
+            --surface: #162035;
+            --cyan: #00D4FF;
+            --cyan-dim: rgba(0, 212, 255, 0.15);
+            --cyan-glow: rgba(0, 212, 255, 0.4);
+            --amber: #F59E0B;
+            --amber-dim: rgba(245, 158, 11, 0.15);
+            --emerald: #10B981;
+            --rose: #F43F5E;
+            --white: #FAFBFD;
+            --gray-100: #F1F5F9;
+            --gray-200: #E2E8F0;
+            --gray-300: #CBD5E1;
+            --gray-400: #94A3B8;
+            --gray-500: #64748B;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1E293B;
+            --text-primary: #F1F5F9;
+            --text-secondary: #94A3B8;
+            --text-dark: #1E293B;
+            --text-dark-secondary: #64748B;
+            --font-display: 'Sora', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ============================================
+           RESET & BASE
+           ============================================ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: var(--midnight);
+            overflow-x: hidden;
+        }
+
+        img { max-width: 100%; display: block; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible,
+        select:focus-visible {
+            outline: 2px solid var(--cyan);
+            outline-offset: 3px;
+            border-radius: 10px;
+        }
+
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ============================================
+           TYPOGRAPHY
+           ============================================ */
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-display);
+            font-weight: 700;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+        }
+
+        h1 { font-size: clamp(2.5rem, 5.5vw, 4.2rem); }
+        h2 { font-size: clamp(2rem, 4vw, 3rem); }
+        h3 { font-size: clamp(1.3rem, 2.5vw, 1.6rem); }
+        h4 { font-size: 1.15rem; }
+
+        .section-label {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--cyan);
+            display: block;
+        }
+
+        .section-label--dark { color: var(--amber); }
+        .section-label--dark::before { background: var(--amber); }
+
+        /* ============================================
+           BUTTONS
+           ============================================ */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 14px 32px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn--primary {
+            background: var(--cyan);
+            color: var(--midnight);
+        }
+
+        .btn--primary:hover {
+            background: #33DDFF;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.35);
+        }
+
+        .btn--secondary {
+            background: transparent;
+            color: var(--white);
+            border: 1.5px solid var(--gray-600);
+        }
+
+        .btn--secondary:hover {
+            border-color: var(--cyan);
+            color: var(--cyan);
+            transform: translateY(-2px);
+        }
+
+        .btn--ghost {
+            background: transparent;
+            color: var(--cyan);
+            padding: 14px 0;
+        }
+
+        .btn--ghost:hover {
+            gap: 14px;
+        }
+
+        .btn--ghost i { transition: transform 0.3s var(--ease-out-expo); }
+        .btn--ghost:hover i { transform: translateX(4px); }
+
+        /* ============================================
+           SCROLL REVEAL ANIMATIONS
+           ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
+        .reveal-delay-6 { transition-delay: 0.6s; }
+        .reveal-delay-7 { transition-delay: 0.7s; }
+
+        /* ============================================
+           1. NAVIGATION
+           ============================================ */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0 24px;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .nav.scrolled {
+            background: rgba(8, 15, 30, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+        }
+
+        .nav__inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 80px;
+        }
+
+        .nav__logo {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nav__logo span {
+            color: var(--cyan);
+        }
+
+        .nav__links {
+            display: flex;
+            align-items: center;
+            gap: 36px;
+        }
+
+        .nav__links a {
+            font-family: var(--font-display);
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--gray-400);
+            transition: color 0.3s;
+            letter-spacing: 0.01em;
+        }
+
+        .nav__links a:hover { color: var(--white); }
+
+        .nav__cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.82rem;
+            font-weight: 600;
+            line-height: 1;
+            white-space: nowrap;
+            padding: 10px 24px;
+            background: var(--cyan);
+            color: var(--midnight);
+            border-radius: 6px;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .nav__cta:hover {
+            background: #33DDFF;
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3);
+            color: var(--midnight);
+        }
+
+        .nav__mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* ============================================
+           2. HERO SECTION
+           ============================================ */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        /* Gradient mesh background */
+        .hero__bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 40%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 30%, rgba(245, 158, 11, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 100% 80% at 50% 100%, rgba(0, 212, 255, 0.04) 0%, transparent 40%),
+                var(--midnight);
+        }
+
+        /* Subtle grid overlay */
+        .hero__grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(0, 212, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 212, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 70%);
+        }
+
+        .hero__content {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero__text { max-width: 560px; }
+
+        .hero__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--cyan-dim);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 100px;
+            padding: 6px 16px 6px 8px;
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--cyan);
+            letter-spacing: 0.04em;
+            margin-bottom: 28px;
+        }
+
+        .hero__badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--cyan);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.4); }
+            50% { box-shadow: 0 0 0 6px rgba(0, 212, 255, 0); }
+        }
+
+        .hero h1 {
+            margin-bottom: 24px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--cyan), #33DDFF);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+                .hero__subtitle {
+            font-size: 1.1rem;
+            color: var(--gray-400);
+            line-height: 1.8;
+            margin-bottom: 18px;
+            max-width: 480px;
+        }
+
+        .hero__powered {
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--gray-500);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 34px;
+        }
+
+        .hero__example {
+            background: rgba(0, 212, 255, 0.06);
+            border: 1px solid rgba(0, 212, 255, 0.18);
+            border-radius: 16px;
+            padding: 14px 16px;
+            margin-bottom: 24px;
+        }
+
+        .hero__example-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .hero__example-title i { color: var(--cyan); }
+
+        .hero__example-text {
+            font-size: 0.9rem;
+            color: var(--gray-400);
+            line-height: 1.65;
+        }
+
+        .hero__actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 56px;
+        }
+
+        .hero__proof {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .hero__proof-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero__proof-value {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--white);
+        }
+
+        .hero__proof-label {
+            font-size: 0.78rem;
+            color: var(--gray-500);
+        }
+
+        .hero__proof-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--gray-700);
+        }
+
+        /* Hub-and-Spoke Diagram */
+        .hub-diagram {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        .hub-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--cyan), #0099CC);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 60px rgba(0, 212, 255, 0.3), 0 0 120px rgba(0, 212, 255, 0.1);
+            z-index: 3;
+            animation: hub-breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes hub-breathe {
+            0%, 100% { box-shadow: 0 0 60px rgba(0, 212, 255, 0.3), 0 0 120px rgba(0, 212, 255, 0.1); }
+            50% { box-shadow: 0 0 80px rgba(0, 212, 255, 0.4), 0 0 160px rgba(0, 212, 255, 0.15); }
+        }
+
+        .hub-center__label {
+            font-family: var(--font-display);
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--midnight);
+            letter-spacing: -0.02em;
+        }
+
+        .hub-center__sub {
+            font-family: var(--font-display);
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: rgba(8, 15, 30, 0.6);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hub-node {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--navy-light);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            z-index: 2;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .hub-node:hover {
+            border-color: var(--cyan);
+            background: var(--surface);
+            transform: scale(1.08);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+        }
+
+        .hub-node i {
+            font-size: 1.2rem;
+            color: var(--cyan);
+        }
+
+        .hub-node span {
+            font-family: var(--font-display);
+            font-size: 0.58rem;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        .hub-node--oem { top: 2%; left: 50%; transform: translateX(-50%); }
+        .hub-node--dms { top: 18%; right: 4%; }
+        .hub-node--crm { bottom: 18%; right: 4%; }
+        .hub-node--erp { bottom: 2%; left: 50%; transform: translateX(-50%); }
+        .hub-node--contact { bottom: 18%; left: 4%; }
+        .hub-node--finance { top: 18%; left: 4%; }
+
+        /* Connection lines via SVG */
+        .hub-lines {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+        }
+
+        .hub-lines line {
+            stroke: rgba(0, 212, 255, 0.22);
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-dasharray: 10 8;
+            animation: dash-flow 12s linear infinite;
+            filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.18));
+        }
+
+
+        /* Flow dots to show direction (outer systems -> OMDA) */
+        .hub-flow {
+            fill: rgba(0, 212, 255, 0.95);
+            opacity: 0.9;
+            filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.35));
+        }
+
+        @keyframes dash-flow {
+            to { stroke-dashoffset: -200; }
+        }
+
+        
+        @keyframes orbit-spin {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        @keyframes orbit-spin-reverse {
+            from { transform: translate(-50%, -50%) rotate(360deg); }
+            to { transform: translate(-50%, -50%) rotate(0deg); }
+        }
+
+/* Orbital ring */
+        .hub-orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 75%;
+            height: 75%;
+            transform: translate(-50%, -50%);
+            border: 1px solid rgba(0, 212, 255, 0.10);
+            border-radius: 50%;
+            z-index: 0;
+            animation: orbit-spin 26s linear infinite;
+        }
+
+        .hub-orbit::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 55%;
+            height: 55%;
+            transform: translate(-50%, -50%);
+            border: 1px dashed rgba(0, 212, 255, 0.07);
+            border-radius: 50%;
+            animation: orbit-spin-reverse 34s linear infinite;
+        }
+
+        /* ============================================
+           3. PROBLEM / PAIN POINTS STATS
+           ============================================ */
+        .pain {
+            background: var(--navy);
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .pain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.15), transparent);
+        }
+
+        .pain__header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 64px;
+        }
+
+        .pain__header h2 {
+            margin-bottom: 16px;
+        }
+
+        .pain__header p {
+            color: var(--gray-400);
+            font-size: 1.05rem;
+        }
+
+        .pain__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .pain-card {
+            background: var(--navy-light);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .pain-card:hover {
+            border-color: rgba(0, 212, 255, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .pain-card__icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .pain-card:nth-child(1) .pain-card__icon { background: rgba(244, 63, 94, 0.12); color: var(--rose); }
+        .pain-card:nth-child(2) .pain-card__icon { background: var(--amber-dim); color: var(--amber); }
+        .pain-card:nth-child(3) .pain-card__icon { background: rgba(139, 92, 246, 0.12); color: #8B5CF6; }
+        .pain-card:nth-child(4) .pain-card__icon { background: rgba(16, 185, 129, 0.12); color: var(--emerald); }
+
+        .pain-card__stat {
+            font-family: var(--font-display);
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--white);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .pain-card__label {
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--gray-300);
+            margin-bottom: 8px;
+        }
+
+        .pain-card__desc {
+            font-size: 0.88rem;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           4. WHAT IS OMDA — SOLUTION OVERVIEW
+           ============================================ */
+        .solution {
+            background: var(--white);
+            color: var(--text-dark);
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .solution__header {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 72px;
+        }
+
+        .solution__header h2 {
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .solution__header p {
+            color: var(--text-dark-secondary);
+            font-size: 1.08rem;
+        }
+
+        .solution__engine {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--cyan-dim);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 100px;
+            padding: 4px 14px;
+            font-family: var(--font-display);
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #0891B2;
+            letter-spacing: 0.04em;
+            margin-top: 16px;
+        }
+
+        .pillars {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .pillar {
+            background: var(--gray-100);
+            border-radius: 20px;
+            padding: 36px 28px;
+            transition: all 0.4s var(--ease-out-expo);
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pillar:hover {
+            background: var(--white);
+            border-color: var(--gray-200);
+            transform: translateY(-6px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+        }
+
+        .pillar__icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 24px;
+        }
+
+        .pillar:nth-child(1) .pillar__icon { background: linear-gradient(135deg, #06B6D4, #0891B2); color: white; }
+        .pillar:nth-child(2) .pillar__icon { background: linear-gradient(135deg, #8B5CF6, #7C3AED); color: white; }
+        .pillar:nth-child(3) .pillar__icon { background: linear-gradient(135deg, var(--amber), #D97706); color: white; }
+        .pillar:nth-child(4) .pillar__icon { background: linear-gradient(135deg, var(--emerald), #059669); color: white; }
+
+        .pillar h3 {
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            font-size: 1.15rem;
+        }
+
+        .pillar p {
+            color: var(--text-dark-secondary);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        /* ============================================
+           5. HOW IT WORKS — ARCHITECTURE
+           ============================================ */
+        .architecture {
+            background: var(--midnight);
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .architecture::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 50% 40% at 80% 50%, rgba(0, 212, 255, 0.04) 0%, transparent 60%);
+        }
+
+        .architecture__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+        }
+
+        .architecture__text h2 { margin-bottom: 20px; }
+
+        .architecture__text > p {
+            color: var(--gray-400);
+            margin-bottom: 40px;
+            font-size: 1.05rem;
+        }
+
+        .arch-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .arch-step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .arch-step__num {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: var(--cyan-dim);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
+        .arch-step h4 {
+            color: var(--white);
+            margin-bottom: 4px;
+        }
+
+        .arch-step p {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+        }
+
+        .arch-checklist {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px 24px;
+        }
+
+        .arch-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.88rem;
+            color: var(--gray-300);
+        }
+
+        .arch-checklist li i {
+            color: var(--emerald);
+            font-size: 0.75rem;
+        }
+
+        /* Architecture Diagram (CSS-drawn) */
+        .arch-diagram {
+            background: var(--navy);
+            border: 1px solid rgba(0, 212, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px 32px;
+            position: relative;
+        }
+
+        .arch-diagram__label {
+            font-family: var(--font-display);
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .arch-layer {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .arch-box {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .arch-box--browser {
+            background: var(--surface);
+            border: 1px solid var(--gray-700);
+            color: var(--gray-300);
+        }
+
+        .arch-box--omda {
+            background: linear-gradient(135deg, var(--cyan), #0099CC);
+            color: var(--midnight);
+            padding: 14px 28px;
+            font-size: 0.82rem;
+        }
+
+        .arch-box--api {
+            background: var(--surface);
+            border: 1px solid var(--gray-700);
+            color: var(--gray-300);
+            font-size: 0.68rem;
+        }
+
+        .arch-box--infra {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.15);
+            color: var(--amber);
+            font-size: 0.68rem;
+        }
+
+        .arch-arrow {
+            text-align: center;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin: 8px 0;
+        }
+
+        .arch-divider {
+            border: none;
+            border-top: 1px dashed var(--gray-700);
+            margin: 16px 0;
+        }
+
+        .arch-divider-label {
+            font-family: var(--font-display);
+            font-size: 0.6rem;
+            color: var(--gray-600);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 12px;
+        }
+
+        /* ============================================
+           6. KEY FEATURES
+           ============================================ */
+        .features {
+            background: var(--gray-100);
+            color: var(--text-dark);
+            padding: 120px 0;
+        }
+
+        .features__header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 64px;
+        }
+
+        .features__header h2 {
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        .features__header p {
+            color: var(--text-dark-secondary);
+            font-size: 1.05rem;
+        }
+
+        .features__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 32px 24px;
+            border: 1px solid var(--gray-200);
+            transition: all 0.4s var(--ease-out-expo);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cyan), transparent);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.06);
+            border-color: rgba(0, 212, 255, 0.2);
+        }
+
+        .feature-card:hover::before { opacity: 1; }
+
+        .feature-card__icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: var(--cyan-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #0891B2;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h4 {
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--text-dark-secondary);
+            font-size: 0.85rem;
+            line-height: 1.65;
+        }
+
+        /* ============================================
+           7. COMPETITIVE DIFFERENTIATION
+           ============================================ */
+        .differentiation {
+            background: var(--midnight);
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .differentiation__header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 64px;
+        }
+
+        .differentiation__header h2 { margin-bottom: 16px; }
+        .differentiation__header p { color: var(--gray-400); font-size: 1.05rem; }
+
+        .ownership-callout {
+            max-width: 760px;
+            margin: 0 auto 48px;
+            background: rgba(0, 212, 255, 0.06);
+            border: 1px solid rgba(0, 212, 255, 0.18);
+            border-radius: 16px;
+            padding: 22px 24px;
+        }
+
+        .ownership-callout h3 {
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .ownership-callout ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 10px;
+        }
+
+        .ownership-callout li {
+            display: flex;
+            gap: 10px;
+            color: var(--gray-400);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .ownership-callout li i {
+            color: var(--cyan);
+            margin-top: 3px;
+        }
+
+        /* "What OMDA Is Not" cards */
+        .not-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 80px;
+        }
+
+        .not-card {
+            background: var(--navy);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 32px;
+            position: relative;
+        }
+
+        .not-card__icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(244, 63, 94, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--rose);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .not-card h4 {
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .not-card p {
+            color: var(--gray-500);
+            font-size: 0.9rem;
+            line-height: 1.65;
+        }
+
+        /* Comparison Table */
+        .comparison {
+            background: var(--navy);
+            border: 1px solid rgba(0, 212, 255, 0.08);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .comparison table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .comparison thead th {
+            font-family: var(--font-display);
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 20px 24px;
+            text-align: left;
+            color: var(--gray-400);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .comparison thead th:last-child {
+            color: var(--cyan);
+            background: rgba(0, 212, 255, 0.04);
+        }
+
+        .comparison tbody td {
+            padding: 16px 24px;
+            font-size: 0.88rem;
+            color: var(--gray-400);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .comparison tbody td:first-child {
+            font-weight: 500;
+            color: var(--gray-300);
+        }
+
+        .comparison tbody td:last-child {
+            background: rgba(0, 212, 255, 0.02);
+        }
+
+        .comparison .check { color: var(--emerald); }
+        .comparison .cross { color: var(--gray-600); }
+        .comparison .partial { color: var(--amber); }
+
+        /* ============================================
+           8. USE CASES BY PERSONA
+           ============================================ */
+        .personas {
+            background: var(--white);
+            color: var(--text-dark);
+            padding: 120px 0;
+        }
+
+        .personas__header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 48px;
+        }
+
+        .personas__header h2 {
+            color: var(--text-dark);
+            margin-bottom: 16px;
+        }
+
+        .personas__header p {
+            color: var(--text-dark-secondary);
+            font-size: 1.05rem;
+        }
+
+        .persona-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 48px;
+            flex-wrap: wrap;
+        }
+
+        .persona-tab {
+            font-family: var(--font-display);
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 100px;
+            border: 1.5px solid var(--gray-200);
+            background: transparent;
+            color: var(--gray-600);
+            cursor: pointer;
+            transition: all 0.3s var(--ease-out-expo);
+        }
+
+        .persona-tab:hover {
+            border-color: var(--gray-400);
+            color: var(--text-dark);
+        }
+
+        .persona-tab.active {
+            background: var(--midnight);
+            border-color: var(--midnight);
+            color: var(--white);
+        }
+
+        .persona-content {
+            display: none;
+            animation: fadeIn 0.5s var(--ease-out-expo);
+        }
+
+        .persona-content.active { display: grid; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .persona-content {
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .persona-info h3 {
+            color: var(--text-dark);
+            margin-bottom: 16px;
+            font-size: 1.6rem;
+        }
+
+        .persona-info > p {
+            color: var(--text-dark-secondary);
+            margin-bottom: 28px;
+            font-size: 1rem;
+        }
+
+        .persona-benefits {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .persona-benefit {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+        }
+
+        .persona-benefit i {
+            flex-shrink: 0;
+            margin-top: 4px;
+            color: var(--emerald);
+        }
+
+        .persona-benefit span {
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Persona visual placeholder */
+        .persona-visual {
+            background: var(--gray-100);
+            border-radius: 20px;
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            min-height: 340px;
+            border: 1px solid var(--gray-200);
+        }
+
+        .persona-visual i {
+            font-size: 3.5rem;
+            color: var(--gray-300);
+        }
+
+        .persona-visual span {
+            font-family: var(--font-display);
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gray-400);
+        }
+
+        /* ============================================
+           9. INTEGRATION ECOSYSTEM
+           ============================================ */
+        .integrations {
+            background: var(--navy);
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .integrations__grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .integrations__visual {
+            position: relative;
+        }
+
+        .integration-map {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .integration-node {
+            background: var(--navy-light);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 24px 16px;
+            text-align: center;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .integration-node:hover {
+            border-color: rgba(0, 212, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .integration-node i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .integration-node--active i { color: var(--cyan); }
+        .integration-node--planned i { color: var(--gray-600); }
+
+        .integration-node span {
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--gray-400);
+            display: block;
+        }
+
+        .integration-node__status {
+            font-size: 0.6rem !important;
+            margin-top: 4px;
+            color: var(--emerald) !important;
+        }
+
+        .integration-node--planned .integration-node__status {
+            color: var(--gray-600) !important;
+        }
+
+        .integrations__text h2 { margin-bottom: 20px; }
+
+        .integrations__text > p {
+            color: var(--gray-400);
+            margin-bottom: 32px;
+            font-size: 1.05rem;
+        }
+
+        .integrations__note {
+            font-size: 0.86rem;
+            color: var(--gray-500);
+            margin-top: -18px;
+            margin-bottom: 28px;
+        }
+
+        .integrations__text .arch-checklist {
+            margin-bottom: 32px;
+        }
+
+        /* ============================================
+           10. ENTERPRISE SECURITY
+           ============================================ */
+        .security {
+            background: var(--midnight);
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .security::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.15), transparent);
+        }
+
+        .security__header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 64px;
+        }
+
+        .security__header h2 { margin-bottom: 16px; }
+        .security__header p { color: var(--gray-400); font-size: 1.05rem; }
+
+        .security__grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        .security-card {
+            background: var(--navy);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 16px;
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .security-card:hover {
+            border-color: rgba(245, 158, 11, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .security-card__icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: var(--amber-dim);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--amber);
+            margin: 0 auto 20px;
+        }
+
+        .security-card h4 {
+            color: var(--white);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .security-card p {
+            color: var(--gray-500);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        /* ============================================
+           11. TECH STACK
+           ============================================ */
+        .techstack {
+            background: var(--navy);
+            padding: 100px 0 120px;
+            border-top: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .techstack__header {
+            text-align: center;
+            max-width: 640px;
+            margin: 0 auto 56px;
+        }
+
+        .techstack__header h2 { margin-bottom: 16px; }
+        .techstack__header p { color: var(--gray-400); font-size: 1.05rem; }
+
+        .techstack__rows {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .techstack__row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .techstack__row-label {
+            flex-shrink: 0;
+            width: 120px;
+            font-family: var(--font-display);
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gray-500);
+            text-align: right;
+        }
+
+        .techstack__pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-pill {
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: var(--navy-light);
+            border: 1px solid rgba(255,255,255,0.05);
+            color: var(--gray-300);
+            transition: all 0.3s;
+        }
+
+        .tech-pill:hover {
+            border-color: rgba(0, 212, 255, 0.15);
+            color: var(--cyan);
+        }
+
+        
+        .techstack__cards {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 20px;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .techstack-card {
+            grid-column: span 6;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 16px;
+            padding: 28px 24px;
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .techstack-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 212, 255, 0.18);
+        }
+
+        .techstack-card__title {
+            font-family: var(--font-display);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 14px;
+        }
+
+        .techstack-list {
+            margin: 0;
+            padding-left: 18px;
+            color: var(--gray-400);
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        .techstack-list li { margin: 8px 0; }
+@media (max-width: 900px) {
+            .techstack-card { grid-column: span 12; }
+        }
+
+        /* ============================================
+           12. FINAL CTA
+           ============================================ */
+        .final-cta {
+            background: linear-gradient(180deg, var(--midnight) 0%, var(--navy) 100%);
+            padding: 120px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 50% at 50% 80%, rgba(0, 212, 255, 0.06) 0%, transparent 60%);
+        }
+
+        .final-cta__content {
+            position: relative;
+            z-index: 1;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+            margin-bottom: 20px;
+        }
+
+        .final-cta p {
+            color: var(--gray-400);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .final-cta__actions {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        /* ============================================
+           13. FOOTER
+           ============================================ */
+        .footer {
+            background: var(--midnight);
+            padding: 80px 0 40px;
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .footer__grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 48px;
+            margin-bottom: 56px;
+        }
+
+        .footer__brand {
+            max-width: 280px;
+        }
+
+        .footer__logo {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--white);
+            margin-bottom: 16px;
+        }
+
+        .footer__logo span { color: var(--cyan); }
+
+        .footer__brand p {
+            color: var(--gray-500);
+            font-size: 0.88rem;
+            line-height: 1.7;
+        }
+
+        .footer__col h5 {
+            font-family: var(--font-display);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--gray-400);
+            margin-bottom: 20px;
+        }
+
+        .footer__col ul {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer__col a {
+            font-size: 0.88rem;
+            color: var(--gray-500);
+            transition: color 0.3s;
+        }
+
+        .footer__col a:hover { color: var(--cyan); }
+
+        .footer__bottom {
+            border-top: 1px solid rgba(255,255,255,0.04);
+            padding-top: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer__copy {
+            font-size: 0.82rem;
+            color: var(--gray-600);
+        }
+
+        .footer__socials {
+            display: flex;
+            gap: 16px;
+        }
+
+        .footer__socials a {
+            color: var(--gray-600);
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        .footer__socials a:hover { color: var(--cyan); }
+
+        
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .hub-lines line { animation: none !important; }
+            .hub-center { animation: none !important; }
+            .hub-orbit { animation: none !important; }
+            .hub-flow { display: none !important; }
+        }
+
+/* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 1024px) {
+            .hero__content { grid-template-columns: 1fr; gap: 48px; }
+            .hero__text { max-width: 100%; }
+            .hub-diagram { max-width: 420px; }
+            .pain__grid { grid-template-columns: repeat(2, 1fr); }
+            .pillars { grid-template-columns: repeat(2, 1fr); }
+            .architecture__grid { grid-template-columns: 1fr; gap: 48px; }
+            .features__grid { grid-template-columns: repeat(2, 1fr); }
+            .not-cards { grid-template-columns: 1fr; }
+            .persona-content { grid-template-columns: 1fr; }
+            .integrations__grid { grid-template-columns: 1fr; gap: 48px; }
+            .security__grid { grid-template-columns: repeat(3, 1fr); }
+            .footer__grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (max-width: 768px) {
+            .nav__links { display: none; }
+            .nav__links.open {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: rgba(8, 15, 30, 0.98);
+                backdrop-filter: blur(20px);
+                padding: 24px;
+                gap: 20px;
+                border-bottom: 1px solid rgba(0, 212, 255, 0.08);
+            }
+            .nav__mobile-toggle { display: block; }
+            .pain__grid { grid-template-columns: 1fr; }
+            .pillars { grid-template-columns: 1fr; }
+            .features__grid { grid-template-columns: 1fr; }
+            .integration-map { grid-template-columns: repeat(2, 1fr); }
+            .security__grid { grid-template-columns: 1fr; }
+            .hero__actions { flex-direction: column; align-items: flex-start; }
+            .hero__proof { flex-direction: column; gap: 16px; }
+            .hero__proof-divider { width: 40px; height: 1px; }
+            .hub-diagram { max-width: 320px; }
+            .hub-center { width: 90px; height: 90px; }
+            .hub-center__label { font-size: 0.9rem; }
+            .hub-node { width: 60px; height: 60px; }
+            .hub-node i { font-size: 0.9rem; }
+            .hub-node span { font-size: 0.5rem; }
+            .final-cta__actions { flex-direction: column; align-items: center; }
+            .techstack__row { flex-direction: column; align-items: flex-start; }
+            .techstack__row-label { text-align: left; width: auto; }
+            .persona-tabs { gap: 6px; }
+            .persona-tab { font-size: 0.75rem; padding: 8px 14px; }
+            .footer__grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer__bottom { flex-direction: column; gap: 16px; text-align: center; }
+
+            .comparison { overflow-x: auto; }
+            .comparison table { min-width: 600px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================
+         1. NAVIGATION
+         ============================================ -->
+    <nav class="nav" id="nav">
+        <div class="nav__inner">
+            <a href="#hero" class="nav__logo">OMD<span>A</span></a>
+            <ul class="nav__links" id="navLinks">
+                <li><a href="#platform">Platform</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#use-cases">Use Cases</a></li>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#security">Security</a></li>
+                <li><a href="#contact" class="nav__cta">Request a Demo</a></li>
+            </ul>
+            <button class="nav__mobile-toggle" id="mobileToggle" type="button" aria-controls="navLinks" aria-expanded="false" aria-label="Open navigation menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         2. HERO SECTION
+         ============================================ -->
+    <section class="hero" id="hero">
+        <div class="hero__bg"></div>
+        <div class="hero__grid"></div>
+        <div class="container">
+            <div class="hero__content">
+                <div class="hero__text">
+                    <div class="hero__badge">
+                        <span class="hero__badge-dot"></span>
+                        DEALER-OWNED INTEGRATION PLATFORM
+                    </div>
+                    <h1>
+                        Your Dealership Has a DMS.<br>
+                        Now It Needs an <span class="highlight">Integration Brain.</span>
+                    </h1>
+                    <p class="hero__subtitle">
+                        Own your integrations. Connect OEM and dealer systems once, enforce your rules everywhere, and trace every sync end to end. OMDA runs above your DMS, CRM, and enterprise stack so your logic stays with you.
+                    </p>
+                    <p class="hero__powered">Powered by the DIBOP engine.</p>
+                    <div class="hero__actions">
+                        <a href="#contact" class="btn btn--primary">
+                            Schedule a Demo <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#platform" class="btn btn--secondary">
+                            Explore the Platform
+                        </a>
+                    </div>
+                    <div class="hero__example">
+                        <div class="hero__example-title"><i class="fa-solid fa-bolt"></i> Example flow</div>
+                        <div class="hero__example-text">An OEM appointment is created. OMDA validates and enriches it, writes it to the DMS, notifies your teams, and records a full audit trail.</div>
+                    </div>
+                    <div class="hero__proof">
+                        <div class="hero__proof-item">
+                            <span class="hero__proof-value">Single</span>
+                            <span class="hero__proof-label">Control Plane</span>
+                        </div>
+                        <div class="hero__proof-divider"></div>
+                        <div class="hero__proof-item">
+                            <span class="hero__proof-value">End-to-End</span>
+                            <span class="hero__proof-label">Sync Traceability</span>
+                        </div>
+                        <div class="hero__proof-divider"></div>
+                        <div class="hero__proof-item">
+                            <span class="hero__proof-value">Dealer-Owned</span>
+                            <span class="hero__proof-label">Rules and Workflows</span>
+                        </div>
+                    </div>                </div>
+
+                <!-- Hub-and-Spoke Diagram -->
+                <!-- VISUAL: Animated hub-and-spoke diagram showing OMDA at center
+                     connecting to 6 external systems (OEM API, DMS, CRM, ERP, Contact Center, Finance).
+                     Dashed lines pulse from nodes to center. Replace with custom SVG/illustration. -->
+                <div class="hub-diagram">
+                    <div class="hub-orbit"></div>
+                    <svg class="hub-lines" viewBox="0 0 520 520">
+                        <line x1="260" y1="145" x2="260" y2="220"/>
+                        <line x1="400" y1="195" x2="320" y2="240"/>
+                        <line x1="400" y1="365" x2="320" y2="310"/>
+                        <line x1="260" y1="415" x2="260" y2="340"/>
+                        <line x1="120" y1="365" x2="200" y2="310"/>
+                        <line x1="120" y1="195" x2="200" y2="240"/>
+
+                        <circle class="hub-flow" r="3" cx="260" cy="145">
+                            <animate attributeName="cx" values="260;260" dur="3.0s" begin="0.0s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="145;220" dur="3.0s" begin="0.0s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="0.0s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="260" cy="145">
+                            <animate attributeName="cx" values="260;260" dur="3.0s" begin="1.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="145;220" dur="3.0s" begin="1.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="1.5s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="400" cy="195">
+                            <animate attributeName="cx" values="400;320" dur="3.0s" begin="0.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="195;240" dur="3.0s" begin="0.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="0.2s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="400" cy="195">
+                            <animate attributeName="cx" values="400;320" dur="3.0s" begin="1.7s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="195;240" dur="3.0s" begin="1.7s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="1.7s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="400" cy="365">
+                            <animate attributeName="cx" values="400;320" dur="3.0s" begin="0.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="365;310" dur="3.0s" begin="0.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="0.4s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="400" cy="365">
+                            <animate attributeName="cx" values="400;320" dur="3.0s" begin="1.9s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="365;310" dur="3.0s" begin="1.9s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="1.9s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="260" cy="415">
+                            <animate attributeName="cx" values="260;260" dur="3.0s" begin="0.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="415;340" dur="3.0s" begin="0.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="0.6s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="260" cy="415">
+                            <animate attributeName="cx" values="260;260" dur="3.0s" begin="2.1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="415;340" dur="3.0s" begin="2.1s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="2.1s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="120" cy="365">
+                            <animate attributeName="cx" values="120;200" dur="3.0s" begin="0.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="365;310" dur="3.0s" begin="0.8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="0.8s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="120" cy="365">
+                            <animate attributeName="cx" values="120;200" dur="3.0s" begin="2.3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="365;310" dur="3.0s" begin="2.3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="2.3s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="120" cy="195">
+                            <animate attributeName="cx" values="120;200" dur="3.0s" begin="1.0s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="195;240" dur="3.0s" begin="1.0s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="1.0s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                        <circle class="hub-flow" r="3" cx="120" cy="195">
+                            <animate attributeName="cx" values="120;200" dur="3.0s" begin="2.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="cy" values="195;240" dur="3.0s" begin="2.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines="0.4 0 0.2 1"/>
+                            <animate attributeName="opacity" values="0;0.9;0" dur="3.0s" begin="2.5s" repeatCount="indefinite" keyTimes="0;0.2;1"/>
+                        </circle>
+                    </svg>
+                    <div class="hub-center">
+                        <span class="hub-center__label">OMDA</span>
+                        <span class="hub-center__sub">DIBOP Engine</span>
+                    </div>
+                    <div class="hub-node hub-node--oem">
+                        <i class="fa-solid fa-car"></i>
+                        <span>OEM API</span>
+                    </div>
+                    <div class="hub-node hub-node--dms">
+                        <i class="fa-solid fa-database"></i>
+                        <span>DMS</span>
+                    </div>
+                    <div class="hub-node hub-node--crm">
+                        <i class="fa-solid fa-users"></i>
+                        <span>CRM</span>
+                    </div>
+                    <div class="hub-node hub-node--erp">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>ERP</span>
+                    </div>
+                    <div class="hub-node hub-node--contact">
+                        <i class="fa-solid fa-headset"></i>
+                        <span>Contact</span>
+                    </div>
+                    <div class="hub-node hub-node--finance">
+                        <i class="fa-solid fa-coins"></i>
+                        <span>Finance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         3. PROBLEM / PAIN POINT STATISTICS
+         ============================================ -->
+    <section class="pain" id="problem">
+        <div class="container">
+            <div class="pain__header reveal">
+                <div class="section-label">The Problem</div>
+                <h2>Dealer IT Is Drowning in Disconnected Systems</h2>
+                <p>Point-to-point integrations turn into a maze. Changes take longer than they should, failures are hard to trace, and teams end up firefighting instead of improving operations.</p>
+            </div>
+            <div class="pain__grid">
+                <div class="pain-card reveal reveal-delay-1">
+                    <div class="pain-card__icon"><i class="fa-solid fa-link-slash"></i></div>
+                    <div class="pain-card__stat">Common</div>
+                    <div class="pain-card__label">Disconnected Data</div>
+                    <div class="pain-card__desc">Customer, vehicle, and order status diverge across systems, so teams work from partial truth.</div>
+                </div>
+                <div class="pain-card reveal reveal-delay-2">
+                    <div class="pain-card__icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="pain-card__stat">Hidden</div>
+                    <div class="pain-card__label">Maintenance Cost</div>
+                    <div class="pain-card__desc">Time and budget are consumed maintaining brittle integrations and fixing breakages after vendor updates.</div>
+                </div>
+                <div class="pain-card reveal reveal-delay-3">
+                    <div class="pain-card__icon"><i class="fa-solid fa-hand-paper"></i></div>
+                    <div class="pain-card__stat">Frequent</div>
+                    <div class="pain-card__label">Manual Rekeying</div>
+                    <div class="pain-card__desc">Cross-system processes still rely on copy, paste, spreadsheets, and human handoffs.</div>
+                </div>
+                <div class="pain-card reveal reveal-delay-4">
+                    <div class="pain-card__icon"><i class="fa-solid fa-scale-unbalanced"></i></div>
+                    <div class="pain-card__stat">Limited</div>
+                    <div class="pain-card__label">Traceability</div>
+                    <div class="pain-card__desc">When something fails, it can be hard to prove what happened, when, and why. That increases risk and slows resolution.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         4. WHAT IS OMDA — SOLUTION OVERVIEW
+         ============================================ -->
+    <section class="solution" id="platform">
+        <div class="container">
+            <div class="solution__header reveal">
+                <div class="section-label section-label--dark">The Platform</div>
+                <h2>Define rules once. Connect systems once. Monitor every sync.</h2>
+                <p>OMDA gives dealer groups one place to define integration rules, map data, and orchestrate cross-system processes. Changes happen in one layer, not across dozens of brittle jobs.</p>
+                <div class="solution__engine">
+                    <i class="fa-solid fa-microchip"></i>
+                    Built on the DIBOP Engine, the Dealership Integration Backbone and Orchestration Platform
+                </div>
+            </div>
+            <div class="pillars">
+                <div class="pillar reveal reveal-delay-1">
+                    <div class="pillar__icon"><i class="fa-solid fa-plug-circle-bolt"></i></div>
+                    <h3>Connector SDK</h3>
+                    <p>A pluggable integration architecture with decorator-based self-registration. Connect any OEM API or dealer system by extending a single base class.</p>
+                </div>
+                <div class="pillar reveal reveal-delay-2">
+                    <div class="pillar__icon"><i class="fa-solid fa-diagram-project"></i></div>
+                    <h3>Canonical Models</h3>
+                    <p>OEM-agnostic, universal data representations for vehicles, customers, orders, and service appointments. One schema, any source system.</p>
+                </div>
+                <div class="pillar reveal reveal-delay-3">
+                    <div class="pillar__icon"><i class="fa-solid fa-gears"></i></div>
+                    <h3>Orchestration Engine</h3>
+                    <p>Define multi-step workflows with conditional logic, parameter mapping between steps, automatic retry, and step-level execution tracking.</p>
+                </div>
+                <div class="pillar reveal reveal-delay-4">
+                    <div class="pillar__icon"><i class="fa-solid fa-gauge-high"></i></div>
+                    <h3>Enterprise Dashboard</h3>
+                    <p>Real-time visibility into every integration, sync operation, and system health metric. Unified monitoring across your entire dealer group.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         5. HOW IT WORKS — ARCHITECTURE
+         ============================================ -->
+    <section class="architecture" id="architecture">
+        <div class="container">
+            <div class="architecture__grid">
+                <div class="architecture__text reveal">
+                    <div class="section-label">How It Works</div>
+                    <h2>Connect, Transform, Orchestrate, Monitor</h2>
+                    <p>OMDA sits between your dealer systems and external APIs, normalizing data, executing business logic, and giving you complete visibility &mdash; without replacing anything that already works.</p>
+                    <div class="arch-steps">
+                        <div class="arch-step">
+                            <div class="arch-step__num">1</div>
+                            <div>
+                                <h4>Connect</h4>
+                                <p>Plug into OEM APIs, DMS platforms, and enterprise systems via pre-built or custom connectors with OAuth 2.0, API Key, or Bearer Token auth.</p>
+                            </div>
+                        </div>
+                        <div class="arch-step">
+                            <div class="arch-step__num">2</div>
+                            <div>
+                                <h4>Transform</h4>
+                                <p>Declarative field mapping normalizes raw external data into canonical DIBOP models &mdash; no code changes required per dealer.</p>
+                            </div>
+                        </div>
+                        <div class="arch-step">
+                            <div class="arch-step__num">3</div>
+                            <div>
+                                <h4>Orchestrate</h4>
+                                <p>Define multi-step workflows with Jinja2 templates, conditional execution, retry logic, and shared context across steps.</p>
+                            </div>
+                        </div>
+                        <div class="arch-step">
+                            <div class="arch-step__num">4</div>
+                            <div>
+                                <h4>Monitor</h4>
+                                <p>Structured audit logging, real-time alerting (Slack, Email, Webhooks), and execution-level tracing across every integration.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="arch-checklist">
+                        <li><i class="fa-solid fa-check"></i> Config-driven routing</li>
+                        <li><i class="fa-solid fa-check"></i> Multi-tenant isolation</li>
+                        <li><i class="fa-solid fa-check"></i> Exponential backoff retry</li>
+                        <li><i class="fa-solid fa-check"></i> Soft-delete data safety</li>
+                        <li><i class="fa-solid fa-check"></i> Azure-native deployment</li>
+                        <li><i class="fa-solid fa-check"></i> Mock mode for testing</li>
+                    </ul>
+                </div>
+
+                <!-- VISUAL: Architecture flow diagram showing the layered system architecture.
+                     Replace with a custom SVG or professional illustration. -->
+                <div class="arch-diagram reveal reveal-delay-2">
+                    <div class="arch-diagram__label">System Architecture</div>
+                    <div class="arch-layer">
+                        <div class="arch-box arch-box--browser"><i class="fa-solid fa-globe"></i> &nbsp;Browser / Client</div>
+                    </div>
+                    <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="arch-layer">
+                        <div class="arch-box arch-box--omda"><i class="fa-solid fa-bolt"></i> &nbsp;OMDA Dashboard &mdash; React + TypeScript</div>
+                    </div>
+                    <div class="arch-arrow"><i class="fa-solid fa-arrow-down"></i></div>
+                    <div class="arch-layer">
+                        <div class="arch-box arch-box--omda"><i class="fa-solid fa-server"></i> &nbsp;DIBOP API &mdash; FastAPI + PostgreSQL</div>
+                    </div>
+                    <div class="arch-arrow"><i class="fa-solid fa-arrows-left-right"></i></div>
+                    <hr class="arch-divider">
+                    <div class="arch-divider-label">External Systems</div>
+                    <div class="arch-layer">
+                        <div class="arch-box arch-box--api"><i class="fa-solid fa-car"></i> &nbsp;MB OneAPI Hub</div>
+                        <div class="arch-box arch-box--api"><i class="fa-solid fa-building"></i> &nbsp;Dynamics 365</div>
+                        <div class="arch-box arch-box--api"><i class="fa-solid fa-database"></i> &nbsp;Autoline DMS</div>
+                    </div>
+                    <hr class="arch-divider">
+                    <div class="arch-divider-label">Infrastructure</div>
+                    <div class="arch-layer">
+                        <div class="arch-box arch-box--infra"><i class="fa-solid fa-cloud"></i> &nbsp;Azure AKS</div>
+                        <div class="arch-box arch-box--infra"><i class="fa-solid fa-key"></i> &nbsp;Key Vault</div>
+                        <div class="arch-box arch-box--infra"><i class="fa-solid fa-chart-area"></i> &nbsp;Monitor</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         6. KEY FEATURES
+         ============================================ -->
+    <section class="features" id="features">
+        <div class="container">
+            <div class="features__header reveal">
+                <div class="section-label section-label--dark">Capabilities</div>
+                <h2>Everything You Need to Own Your Integration Layer</h2>
+                <p>Purpose-built features for automotive dealership integration &mdash; from connector development to production monitoring.</p>
+            </div>
+            <div class="features__grid">
+                <div class="feature-card reveal reveal-delay-1">
+                    <div class="feature-card__icon"><i class="fa-solid fa-puzzle-piece"></i></div>
+                    <h4>Pluggable Connector SDK</h4>
+                    <p>Extend a single base class to build new integrations. Decorator-based self-registration, built-in auth adapters, and automatic retry with exponential backoff.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-2">
+                    <div class="feature-card__icon"><i class="fa-solid fa-arrows-rotate"></i></div>
+                    <h4>Declarative Field Mapping</h4>
+                    <p>JSON-based mapping specifications transform any external data format into canonical models. Dot-path resolution, named transforms, Pydantic validation. No code changes per dealer.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-3">
+                    <div class="feature-card__icon"><i class="fa-solid fa-sitemap"></i></div>
+                    <h4>Workflow Orchestration</h4>
+                    <p>Multi-step integration workflows with Jinja2 parameter mapping, conditional execution, per-step retry, and shared context objects across the entire chain.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-4">
+                    <div class="feature-card__icon"><i class="fa-solid fa-compress"></i></div>
+                    <h4>VDH Translation Layer</h4>
+                    <p>Simplifies Mercedes-Benz VDH API requests by translating business parameters into the full 82-schema VDH request structure automatically.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-5">
+                    <div class="feature-card__icon"><i class="fa-solid fa-building"></i></div>
+                    <h4>Multi-Tenant Architecture</h4>
+                    <p>Enterprise-level scoping with per-tenant isolation, subscription tiers (Free through Enterprise), and a dealer group hierarchy of enterprises and stores.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-6">
+                    <div class="feature-card__icon"><i class="fa-solid fa-bell"></i></div>
+                    <h4>Real-Time Alerting</h4>
+                    <p>Configurable alert rules for CPU, memory, API errors, DB failures, and slow responses. Multi-channel delivery via Slack, Email, and Webhooks.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-7">
+                    <div class="feature-card__icon"><i class="fa-solid fa-shield-halved"></i></div>
+                    <h4>RBAC &amp; Security</h4>
+                    <p>JWT authentication, OAuth 2.0 machine-to-machine flows, role-based access control, Azure Key Vault secrets, and automatic sensitive data masking in all logs.</p>
+                </div>
+                <div class="feature-card reveal reveal-delay-7">
+                    <div class="feature-card__icon"><i class="fa-solid fa-flask-vial"></i></div>
+                    <h4>Mock Mode</h4>
+                    <p>Toggle between mock and real API data for safe development, demos, and testing. Full OneAPI mock server included with sample Mercedes-Benz vehicle data.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         7. COMPETITIVE DIFFERENTIATION
+         ============================================ -->
+    <section class="differentiation" id="differentiation">
+        <div class="container">
+            <div class="differentiation__header reveal">
+                <div class="section-label">The OMDA Difference</div>
+                <h2>What OMDA is and what it is not</h2>
+                <p>OMDA is purpose-built for dealers. It focuses on control, traceability, and change speed across your OEM and dealer systems.</p>
+            </div>
+
+            <div class="ownership-callout reveal">
+                <h3>Dealer-owned means:</h3>
+                <ul>
+                    <li><i class="fa-solid fa-check"></i> Your rules live in portable workflows and mappings, not vendor-specific scripts.</li>
+                    <li><i class="fa-solid fa-check"></i> Integrations are versioned, tested, and deployed like software.</li>
+                    <li><i class="fa-solid fa-check"></i> Designed so you can operate it in a dealer-controlled environment, or have it operated for you, without locking logic into a proprietary iPaaS.</li>
+                </ul>
+            </div>
+
+            <div class="not-cards">
+                <div class="not-card reveal reveal-delay-1">
+                    <div class="not-card__icon"><i class="fa-solid fa-xmark"></i></div>
+                    <h4>Not a DMS Replacement</h4>
+                    <p>OMDA doesn't compete with your DMS. It sits above it, connecting it to OEM APIs and other systems while leaving your system of record untouched.</p>
+                </div>
+                <div class="not-card reveal reveal-delay-2">
+                    <div class="not-card__icon"><i class="fa-solid fa-xmark"></i></div>
+                    <h4>Not Data Duplication</h4>
+                    <p>OMDA doesn't copy or warehouse your data. It transforms, routes, and orchestrates data in motion while keeping the source of truth where it belongs.</p>
+                </div>
+                <div class="not-card reveal reveal-delay-3">
+                    <div class="not-card__icon"><i class="fa-solid fa-xmark"></i></div>
+                    <h4>Not a Fixed Platform</h4>
+                    <p>OMDA is extensible by design. The Connector SDK lets you build new integrations as your business grows without waiting for a vendor roadmap.</p>
+                </div>
+            </div>
+
+            <!-- VISUAL: Comparison chart table. Replace with custom designed infographic for maximum visual impact. -->
+            <div class="comparison reveal">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Capability</th>
+                            <th>Point-to-Point</th>
+                            <th>Generic iPaaS</th>
+                            <th>OMDA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Automotive-specific data models</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>OEM API complexity reduction</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="partial"><i class="fa-solid fa-minus"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i> Reduced</td>
+                        </tr>
+                        <tr>
+                            <td>Dealer-owned business logic</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="partial"><i class="fa-solid fa-minus"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Multi-tenant dealer group support</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="partial"><i class="fa-solid fa-minus"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Pluggable connector SDK</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Workflow orchestration</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>Full audit trail &amp; compliance</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="partial"><i class="fa-solid fa-minus"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                        <tr>
+                            <td>No vendor lock-in</td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="cross"><i class="fa-solid fa-xmark"></i></td>
+                            <td class="check"><i class="fa-solid fa-check"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         8. USE CASES BY PERSONA
+         ============================================ -->
+    <section class="personas" id="use-cases">
+        <div class="container">
+            <div class="personas__header reveal">
+                <div class="section-label section-label--dark">Use Cases</div>
+                <h2>Built for Every Role in the Dealership</h2>
+                <p>From the dealer principal to the IT director, OMDA delivers value across the entire organization.</p>
+            </div>
+
+            <div class="persona-tabs reveal" role="tablist" aria-label="Use cases by role">
+                <button class="persona-tab active" data-persona="principal" id="tab-principal" role="tab" aria-selected="true" aria-controls="panel-principal" tabindex="0">Dealer Principal</button>
+                <button class="persona-tab" data-persona="it" id="tab-it" role="tab" aria-selected="false" aria-controls="panel-it" tabindex="-1">IT Director</button>
+                <button class="persona-tab" data-persona="service" id="tab-service" role="tab" aria-selected="false" aria-controls="panel-service" tabindex="-1">Service Manager</button>
+                <button class="persona-tab" data-persona="sales" id="tab-sales" role="tab" aria-selected="false" aria-controls="panel-sales" tabindex="-1">Sales Manager</button>
+                <button class="persona-tab" data-persona="compliance" id="tab-compliance" role="tab" aria-selected="false" aria-controls="panel-compliance" tabindex="-1">Compliance</button>
+            </div>
+
+            <div class="persona-content active" data-persona="principal" id="panel-principal" role="tabpanel" aria-labelledby="tab-principal" tabindex="0">
+                <div class="persona-info">
+                    <h3>Operational Independence, On Your Terms</h3>
+                    <p>Stop relying on vendors to change how your business operates. OMDA puts the decisions back in your hands &mdash; pricing rules, approval workflows, compliance checks, all defined and controlled by your team.</p>
+                    <div class="persona-benefits">
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Define business logic once, execute consistently across all locations</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Swap vendors without rewriting your entire integration layer</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Complete visibility into every cross-system operation with audit trails</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- VISUAL: Illustration showing a dealer principal at a command center dashboard
+                     with multiple system feeds converging into one unified view. -->
+                <div class="persona-visual">
+                    <i class="fa-solid fa-chess-king"></i>
+                    <span>Command Center View</span>
+                </div>
+            </div>
+
+            <div class="persona-content" data-persona="it" id="panel-it" role="tabpanel" aria-labelledby="tab-it" tabindex="0" hidden>
+                <div class="persona-info">
+                    <h3>API-First Architecture, Built for Your Stack</h3>
+                    <p>OMDA is an engineer's integration platform. FastAPI backend, React frontend, Azure-native deployment, and a Connector SDK that lets your team build new integrations without touching core platform code.</p>
+                    <div class="persona-benefits">
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Extend the platform via the Connector SDK &mdash; Python base class with auth, retry, and mapping built in</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Deploy on Azure AKS with Kustomize overlays for dev, staging, and production</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Full CI/CD pipeline with GitHub Actions, automated testing, and type checking</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="persona-visual">
+                    <i class="fa-solid fa-terminal"></i>
+                    <span>Developer Experience</span>
+                </div>
+            </div>
+
+            <div class="persona-content" data-persona="service" id="panel-service" role="tabpanel" aria-labelledby="tab-service" tabindex="0" hidden>
+                <div class="persona-info">
+                    <h3>Automated Service Orchestration</h3>
+                    <p>From appointment scheduling to parts lookup and warranty verification, OMDA orchestrates your service workflows across OEM APIs and DMS systems in real time.</p>
+                    <div class="persona-benefits">
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Automatic service appointment sync with status tracking and bay assignment</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Real-time spare parts lookup and repair time estimation via OEM APIs</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Warranty verification at the point of service &mdash; no manual portal checks</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="persona-visual">
+                    <i class="fa-solid fa-wrench"></i>
+                    <span>Service Workflow</span>
+                </div>
+            </div>
+
+            <div class="persona-content" data-persona="sales" id="panel-sales" role="tabpanel" aria-labelledby="tab-sales" tabindex="0" hidden>
+                <div class="persona-info">
+                    <h3>Inventory, Pricing, and Customer Data in One Place</h3>
+                    <p>OMDA consolidates vehicle search, pricing, customer records, and order management across your OEM and DMS systems &mdash; giving your sales team a single source of truth.</p>
+                    <div class="persona-benefits">
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Unified vehicle search across OEM inventory with normalized pricing data</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Customer data synchronized between CRM and DMS in real time</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Order tracking from creation through delivery with full audit history</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="persona-visual">
+                    <i class="fa-solid fa-handshake"></i>
+                    <span>Sales Pipeline View</span>
+                </div>
+            </div>
+
+            <div class="persona-content" data-persona="compliance" id="panel-compliance" role="tabpanel" aria-labelledby="tab-compliance" tabindex="0" hidden>
+                <div class="persona-info">
+                    <h3>Full Audit Trail and Data Governance</h3>
+                    <p>Every data transformation, API call, and workflow execution is logged with structured audit records. OMDA provides the compliance visibility that disconnected systems cannot.</p>
+                    <div class="persona-benefits">
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Four dedicated log channels: application, access, error, and audit</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>UAE PDPL data protection compliance built into the platform architecture</span>
+                        </div>
+                        <div class="persona-benefit">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Cross-system data lineage tracking with source system and sync status on every record</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="persona-visual">
+                    <i class="fa-solid fa-file-shield"></i>
+                    <span>Compliance Dashboard</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         9. INTEGRATION ECOSYSTEM
+         ============================================ -->
+    <section class="integrations" id="integrations">
+        <div class="container">
+            <div class="integrations__grid">
+                <!-- VISUAL: Integration ecosystem map showing OMDA at center with
+                     OEM and system logos radiating outward. Replace nodes with actual brand logos. -->
+                <div class="integrations__visual reveal">
+                    <div class="integration-map">
+                        <div class="integration-node integration-node--active">
+                            <i class="fa-solid fa-star-of-life"></i>
+                            <span>Mercedes-Benz OneAPI</span>
+                            <span class="integration-node__status">Live</span>
+                        </div>
+                        <div class="integration-node integration-node--active">
+                            <i class="fa-solid fa-building-columns"></i>
+                            <span>Dynamics 365 F&amp;O</span>
+                            <span class="integration-node__status">Live</span>
+                        </div>
+                        <div class="integration-node integration-node--active">
+                            <i class="fa-solid fa-server"></i>
+                            <span>Autoline DMS</span>
+                            <span class="integration-node__status">Live</span>
+                        </div>
+                        <div class="integration-node integration-node--planned">
+                            <i class="fa-solid fa-car-side"></i>
+                            <span>BMW</span>
+                            <span class="integration-node__status">Roadmap</span>
+                        </div>
+                        <div class="integration-node integration-node--planned">
+                            <i class="fa-solid fa-mountain-sun"></i>
+                            <span>Subaru</span>
+                            <span class="integration-node__status">Roadmap</span>
+                        </div>
+                        <div class="integration-node integration-node--planned">
+                            <i class="fa-solid fa-bolt-lightning"></i>
+                            <span>Tesla</span>
+                            <span class="integration-node__status">Roadmap</span>
+                        </div>
+                        <div class="integration-node integration-node--planned">
+                            <i class="fa-solid fa-headset"></i>
+                            <span>Genesys</span>
+                            <span class="integration-node__status">Roadmap</span>
+                        </div>
+                        <div class="integration-node integration-node--planned">
+                            <i class="fa-solid fa-users-gear"></i>
+                            <span>CRM Systems</span>
+                            <span class="integration-node__status">Roadmap</span>
+                        </div>
+                        <div class="integration-node integration-node--planned">
+                            <i class="fa-solid fa-coins"></i>
+                            <span>Financial Systems</span>
+                            <span class="integration-node__status">Roadmap</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="integrations__text reveal reveal-delay-2">
+                    <div class="section-label">Ecosystem</div>
+                    <h2>Growing connector library. Extensible by design.</h2>
+                    <p>OMDA includes live connectors for Mercedes-Benz OneAPI, Dynamics 365 F&amp;O, and Autoline DMS. The roadmap expands based on demand, and the Connector SDK lets your team extend OMDA without waiting on a vendor.</p>
+                    <p class="integrations__note">Roadmap items shown are examples. Confirm current availability during a demo.</p>
+                    <ul class="arch-checklist">
+                        <li><i class="fa-solid fa-check"></i> OAuth 2.0 client credentials flow</li>
+                        <li><i class="fa-solid fa-check"></i> API Key &amp; Bearer Token adapters</li>
+                        <li><i class="fa-solid fa-check"></i> Automatic retry with backoff</li>
+                        <li><i class="fa-solid fa-check"></i> Error normalization</li>
+                        <li><i class="fa-solid fa-check"></i> Canonical data mapping</li>
+                        <li><i class="fa-solid fa-check"></i> Audit event emission</li>
+                    </ul>
+                    <a href="#contact" class="btn btn--ghost">
+                        Build Your First Connector <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         10. ENTERPRISE SECURITY & GOVERNANCE
+         ============================================ -->
+    <section class="security" id="security">
+        <div class="container">
+            <div class="security__header reveal">
+                <div class="section-label">Enterprise-Grade Security</div>
+                <h2>Built for Trust. Designed for Compliance.</h2>
+                <p>Every layer of OMDA is architected with enterprise security requirements &mdash; from authentication to audit logging to regional data protection.</p>
+            </div>
+            <div class="security__grid">
+                <div class="security-card reveal reveal-delay-1">
+                    <div class="security-card__icon"><i class="fa-solid fa-fingerprint"></i></div>
+                    <h4>JWT + OAuth 2.0</h4>
+                    <p>HS256 user authentication with configurable expiry. OAuth 2.0 client-credentials for machine-to-machine integration.</p>
+                </div>
+                <div class="security-card reveal reveal-delay-2">
+                    <div class="security-card__icon"><i class="fa-solid fa-user-lock"></i></div>
+                    <h4>Role-Based Access</h4>
+                    <p>Admin, User, and Read-Only roles with max 5 concurrent sessions and automatic inactivity expiry.</p>
+                </div>
+                <div class="security-card reveal reveal-delay-3">
+                    <div class="security-card__icon"><i class="fa-solid fa-vault"></i></div>
+                    <h4>Azure Key Vault</h4>
+                    <p>All secrets managed through Azure Key Vault with in-memory caching, managed identity, and automatic env fallback.</p>
+                </div>
+                <div class="security-card reveal reveal-delay-4">
+                    <div class="security-card__icon"><i class="fa-solid fa-clipboard-list"></i></div>
+                    <h4>Structured Audit Logs</h4>
+                    <p>Four dedicated channels &mdash; application, access, error, audit &mdash; with file and database persistence and sensitive data masking.</p>
+                </div>
+                <div class="security-card reveal reveal-delay-5">
+                    <div class="security-card__icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    <h4>UAE PDPL Compliance</h4>
+                    <p>Built to address UAE Federal Data Protection Law requirements with regional data handling and DIFC jurisdiction support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         11. TECHNOLOGY OVERVIEW (DIBOP ENGINE)
+         ============================================ -->
+    <section class="techstack" id="techstack">
+        <div class="container">
+            <div class="techstack__header reveal">
+                <div class="section-label">Technology</div>
+                <h2>Built for Reliability and Portability</h2>
+                <p>A production-grade platform foundation that is easy to deploy, easy to operate, and easy to evolve as your dealer group changes.</p>
+            </div>
+
+            <div class="techstack__cards reveal">
+                <div class="techstack-card">
+                    <div class="techstack-card__title">Core Platform</div>
+                    <ul class="techstack-list">
+                        <li>Containerized integration and workflow runtime</li>
+                        <li>Rules and transformations for dealer group logic</li>
+                        <li>Connector framework for OEM and dealer systems</li>
+                    </ul>
+                </div>
+
+                <div class="techstack-card">
+                    <div class="techstack-card__title">Cloud and Deployment</div>
+                    <ul class="techstack-list">
+                        <li>Docker-based containers, deployable to dealer group cloud</li>
+                        <li>Repeatable environments for dev, test, and production</li>
+                        <li>CI/CD for safe, frequent releases</li>
+                    </ul>
+                </div>
+
+                <div class="techstack-card">
+                    <div class="techstack-card__title">Integration Patterns</div>
+                    <ul class="techstack-list">
+                        <li>Event and API based integrations</li>
+                        <li>Queue support for bursts, retries, and replay</li>
+                        <li>Idempotency and correlation IDs for safe processing</li>
+                    </ul>
+                </div>
+
+                <div class="techstack-card">
+                    <div class="techstack-card__title">Security and Governance</div>
+                    <ul class="techstack-list">
+                        <li>OAuth2 and modern identity integration</li>
+                        <li>Least privilege access and secrets management</li>
+                        <li>Audit trail for every sync and change</li>
+                    </ul>
+                </div>
+
+                <div class="techstack-card">
+                    <div class="techstack-card__title">Observability</div>
+                    <ul class="techstack-list">
+                        <li>Central logs, metrics, and tracing</li>
+                        <li>Dashboards and alerts for failures and latency</li>
+                        <li>End-to-end visibility across connected systems</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ============================================
+         12. FINAL CTA
+         ============================================ -->
+    <section class="final-cta" id="contact">
+        <div class="container">
+            <div class="final-cta__content reveal">
+                <div class="section-label" style="justify-content: center;">Take the Next Step</div>
+                <h2>Ready to Take Control of<br>Your Integrations?</h2>
+                <p>See how OMDA can eliminate integration friction, reduce vendor dependency, and give your dealership the operational backbone it deserves.</p>
+                <div class="final-cta__actions">
+                    <a href="mailto:info@proteance.com?subject=OMDA%20Demo%20Request" class="btn btn--primary">
+                        Schedule a Demo <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         13. FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__grid">
+                <div class="footer__brand">
+                    <div class="footer__logo">OMD<span>A</span></div>
+                    <p>The dealer-owned execution layer that connects OEM APIs, DMS, CRM, and enterprise systems. Powered by the DIBOP engine.</p>
+                </div>
+                <div class="footer__col">
+                    <h5>Platform</h5>
+                    <ul>
+                        <li><a href="#platform">Overview</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#architecture">Architecture</a></li>
+                        <li><a href="#integrations">Integrations</a></li>
+                        <li><a href="#security">Security</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h5>Resources</h5>
+                    <ul>
+                        <li><a href="https://github.com/dcampb58/DIBOP" target="_blank" rel="noopener">Documentation</a></li>
+                        <li><a href="#techstack">Tech Stack</a></li>
+                        <li><a href="#use-cases">Use Cases</a></li>
+                        <li><a href="#differentiation">Why OMDA</a></li>
+                    </ul>
+                </div>
+                <div class="footer__col">
+                    <h5>Contact</h5>
+                    <ul>
+                        <li><a href="mailto:info@proteance.com">info@proteance.com</a></li>
+                        <li><a href="#contact">Request a Demo</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <div class="footer__copy">&copy; 2026 OMDA. All rights reserved.</div>
+                <div class="footer__socials">
+                    <a href="https://github.com/dcampb58/DIBOP" target="_blank" rel="noopener" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         SCRIPTS
+         ============================================ -->
+    <script>
+        // Sticky nav background on scroll
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 40);
+        });
+
+        // Mobile nav toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        const setMobileNavState = (isOpen) => {
+            mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            mobileToggle.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+        };
+
+        mobileToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            const icon = mobileToggle.querySelector('i');
+            icon.classList.toggle('fa-bars', !isOpen);
+            icon.classList.toggle('fa-xmark', isOpen);
+            setMobileNavState(isOpen);
+        });
+
+        // Close mobile nav on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                const icon = mobileToggle.querySelector('i');
+                icon.classList.add('fa-bars');
+                icon.classList.remove('fa-xmark');
+                setMobileNavState(false);
+            });
+        });
+
+        setMobileNavState(false);
+
+        // Persona tabs
+        const tabs = Array.from(document.querySelectorAll('.persona-tab'));
+        const contents = Array.from(document.querySelectorAll('.persona-content'));
+
+        const activatePersona = (persona) => {
+            tabs.forEach(t => {
+                const isActive = t.dataset.persona === persona;
+                t.classList.toggle('active', isActive);
+                t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+                t.tabIndex = isActive ? 0 : -1;
+            });
+
+            contents.forEach(panel => {
+                const isActive = panel.dataset.persona === persona;
+                panel.classList.toggle('active', isActive);
+                panel.hidden = !isActive;
+            });
+        };
+
+        tabs.forEach((tab, index) => {
+            tab.addEventListener('click', () => {
+                activatePersona(tab.dataset.persona);
+                tab.focus();
+            });
+
+            tab.addEventListener('keydown', (e) => {
+                const key = e.key;
+                const currentIndex = tabs.indexOf(document.activeElement);
+
+                if (key === 'ArrowRight' || key === 'ArrowLeft' || key === 'Home' || key === 'End') {
+                    e.preventDefault();
+                } else if (key === 'Enter' || key === ' ') {
+                    e.preventDefault();
+                    activatePersona(tab.dataset.persona);
+                    return;
+                } else {
+                    return;
+                }
+
+                let nextIndex = currentIndex;
+                if (key === 'ArrowRight') nextIndex = (currentIndex + 1) % tabs.length;
+                if (key === 'ArrowLeft') nextIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                if (key === 'Home') nextIndex = 0;
+                if (key === 'End') nextIndex = tabs.length - 1;
+
+                tabs[nextIndex].focus();
+            });
+        });
+
+        // Ensure initial state is consistent
+        const initialActive = document.querySelector('.persona-tab.active')?.dataset.persona || tabs[0]?.dataset.persona;
+        if (initialActive) activatePersona(initialActive);
+
+        // Scroll reveal with IntersectionObserver
+        const revealElements = document.querySelectorAll('.reveal');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        revealElements.forEach(el => observer.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (!href || href === '#') return; // avoid invalid selector like '#'
+
+                const target = document.querySelector(href);
+                if (!target) return;
+
+                e.preventDefault();
+                const navHeight = nav.offsetHeight;
+                const targetPos = target.getBoundingClientRect().top + window.scrollY - navHeight;
+                window.scrollTo({ top: targetPos, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
