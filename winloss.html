@@ -3,12 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Proteance Win-Loss Analysis - Turn lost deals into measurable revenue improvement">
-    <title>Proteance Win-Loss Analysis | Proteance</title>
+    <meta name="description" content="Proteance Win-Loss Analysis - Turn lost deals into measurable revenue improvement through gamified surveys, AI analysis, and comparative win/loss intelligence.">
+    <title>Proteance Win–Loss Analysis | Proteance</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Win-Loss page enhancements */
+        .survey-type-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin: 40px 0;
+        }
+        .survey-type-card {
+            background: #fff;
+            border: 2px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 32px 28px;
+            transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .survey-type-card:hover {
+            border-color: #FFD700;
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+        .survey-type-card .type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .badge-winback  { background: #FFF8E7; color: #B45309; }
+        .badge-retention { background: #F0FDF4; color: #166534; }
+        .survey-type-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+        .survey-type-card p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.65;
+            margin-bottom: 16px;
+        }
+        .survey-type-card .covers-list {
+            list-style: none;
+            padding: 0; margin: 0;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .survey-type-card .covers-list li {
+            font-size: 0.85rem;
+            color: #444;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .survey-type-card .covers-list li::before {
+            content: '';
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #FFD700; flex-shrink: 0;
+        }
+
+        .gamification-block {
+            background: linear-gradient(135deg, #FFFDF0 0%, #FFF8DC 100%);
+            border: 1px solid #FFE066;
+            border-radius: 12px;
+            padding: 32px 36px;
+            margin: 32px 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: center;
+        }
+        .gamification-block h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+        .gamification-block p {
+            font-size: 0.95rem;
+            color: #555;
+            line-height: 1.7;
+        }
+        .points-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .points-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            border-radius: 8px;
+            padding: 10px 14px;
+            font-size: 0.85rem;
+            color: #444;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .points-row .pts {
+            font-weight: 700;
+            color: #B45309;
+            font-size: 0.8rem;
+            background: #FFF8E7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .import-block {
+            background: #F8F9FA;
+            border-left: 4px solid #1a1a1a;
+            border-radius: 0 8px 8px 0;
+            padding: 24px 28px;
+            margin: 28px 0;
+        }
+        .import-block h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+        .import-block p {
+            font-size: 0.9rem;
+            color: #555;
+            line-height: 1.65;
+        }
+        .format-pills {
+            display: flex; flex-wrap: wrap; gap: 8px;
+            margin-top: 14px;
+        }
+        .format-pill {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 4px 12px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .infra-strip {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .infra-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .infra-pill i { color: #888; font-size: 0.9rem; }
+
+        @media (max-width: 700px) {
+            .survey-type-grid  { grid-template-columns: 1fr; }
+            .gamification-block { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
@@ -25,7 +191,7 @@
                     <li><a href="index.html#vision">Vision</a></li>
                     <li><a href="index.html#approach">Approach</a></li>
                     <li><a href="index.html#expertise">Expertise</a></li>
-                    <li><a href="index.html#products">Products & Services</a></li>
+                    <li><a href="index.html#products">Products &amp; Services</a></li>
                     <li><a href="about.html">About</a></li>
                     <li><a href="index.html#contact" class="btn-contact">Contact Us</a></li>
                 </ul>
@@ -41,6 +207,7 @@
     <!-- Hero Section -->
     <section class="page-hero winloss-hero">
         <div class="container">
+            <img src="WebsiteImages/LogoProteanceWinLoss.png" alt="Proteance Win-Loss" style="height:56px; width:auto; margin-bottom:20px; display:block; margin-left:auto; margin-right:auto;">
             <h1>Proteance Win–Loss Analysis</h1>
             <p class="page-subtitle">Turning lost deals into measurable revenue improvement</p>
         </div>
@@ -49,17 +216,57 @@
     <!-- Introduction -->
     <section class="section winloss-intro">
         <div class="container">
-            <p class="lead-text">Most dealerships only convert a small fraction of the customers they engage—yet few have a clear, evidence‑based understanding of why deals are lost. Sales teams move on, feedback is fragmented, and the same issues repeat unnoticed.</p>
-            <p class="highlight-text">Proteance Win–Loss Analysis is a purpose‑built intelligence platform designed to close that gap.</p>
+            <p class="lead-text">Most dealerships only convert a small fraction of the customers they engage — yet few have a clear, evidence-based understanding of why deals are lost. Sales teams move on, feedback is fragmented, and the same issues repeat unnoticed.</p>
+            <p class="highlight-text">Proteance Win–Loss Analysis is a purpose-built intelligence platform designed to close that gap — with two survey types, a built-in points system, and AI-assisted analysis that turns raw feedback into specific recommendations.</p>
+        </div>
+    </section>
+
+    <!-- Two Survey Types -->
+    <section class="section winloss-types" style="background: #f8f9fa; padding-top: 60px; padding-bottom: 60px;">
+        <div class="container">
+            <div class="section-header">
+                <h2>Two Survey Types, One Platform</h2>
+                <div class="section-divider"></div>
+                <p style="color:#555; max-width:600px; margin: 0 auto;">Different moments in the customer journey need different questions. The platform handles both — with each survey type structured around the specific decisions customers make.</p>
+            </div>
+
+            <div class="survey-type-grid">
+                <div class="survey-type-card">
+                    <span class="type-badge badge-winback">Win-Back</span>
+                    <h3>Vehicle Purchase Survey</h3>
+                    <p>For customers who engaged but didn't buy. Captures the real reasons behind lost deals — pricing clarity, trust, sales experience, and process friction — at the exact moment those reasons are still fresh.</p>
+                    <ul class="covers-list">
+                        <li>Purchase decision drivers</li>
+                        <li>Vehicle type and engine preferences</li>
+                        <li>Finance vs. cash purchase context</li>
+                        <li>Follow-up quality and timing</li>
+                        <li>Where the competitor won</li>
+                    </ul>
+                </div>
+                <div class="survey-type-card">
+                    <span class="type-badge badge-retention">Retention</span>
+                    <h3>Service Experience Survey</h3>
+                    <p>For customers who came in for service and may not return. Surfaces the friction points that silently erode customer loyalty — without waiting for a formal complaint or a poor review.</p>
+                    <ul class="covers-list">
+                        <li>Service quality and communication</li>
+                        <li>Booking and handover experience</li>
+                        <li>Value for money perception</li>
+                        <li>Likelihood to return and recommend</li>
+                        <li>Specific service team feedback</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- How It Works -->
     <section class="section winloss-how">
         <div class="container">
-            <h2>How It Works</h2>
-            <p>The solution captures structured, high‑quality feedback from both lost and won deals using targeted, gamified surveys delivered at the right point in the customer journey. Responses go far beyond generic reasons, uncovering deeper drivers such as pricing clarity, sales experience, follow‑up quality, trust, and process friction.</p>
-            
+            <div class="section-header">
+                <h2>How It Works</h2>
+                <div class="section-divider"></div>
+            </div>
+
             <!-- ECLAT Process -->
             <div class="process-diagram">
                 <h3>The ECLAT Methodology</h3>
@@ -68,15 +275,54 @@
                 </div>
                 <p class="process-description">Our proven five-stage methodology ensures comprehensive win-loss intelligence</p>
             </div>
-            
+
+            <!-- Gamification -->
+            <div class="gamification-block">
+                <div>
+                    <h3>🎮 Built-in Points System</h3>
+                    <p>Generic surveys get surface-level answers. Our surveys use an opt-in points and reward system that encourages customers to go deeper — sharing the real reasons behind their decision rather than clicking the first option.</p>
+                    <p style="margin-top:10px;">Customers earn points for completing each section, with bonus points for adding written detail. The result is richer, more actionable feedback — and a materially higher response rate.</p>
+                </div>
+                <div class="points-visual">
+                    <div class="points-row">
+                        <span>Rate your sales experience</span>
+                        <span class="pts">+10 pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span>Tell us what could have been better</span>
+                        <span class="pts">+25 pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span>Share your vehicle preferences</span>
+                        <span class="pts">+15 pts</span>
+                    </div>
+                    <div class="points-row">
+                        <span>Would you consider returning?</span>
+                        <span class="pts">+20 pts</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Portal & Smart Import -->
             <div class="feature-highlight">
                 <h3>Integrated Administration Portal</h3>
-                <p>An integrated administration portal allows dealerships to:</p>
+                <p>An administration portal lets your team manage campaigns without touching day-to-day operations.</p>
                 <ul class="feature-list">
-                    <li>Import prospect and customer data from CRM systems or files</li>
-                    <li>Schedule surveys, reminders, and follow‑ups</li>
-                    <li>Manage campaigns without disrupting day‑to‑day operations</li>
+                    <li>Schedule surveys, reminders, and follow-ups against customer records</li>
+                    <li>Manage campaigns by segment, salesperson, or vehicle type</li>
+                    <li>View response rates, completion status, and results in one place</li>
                 </ul>
+            </div>
+
+            <div class="import-block">
+                <h3>Smart Customer Data Import</h3>
+                <p>Upload your existing customer list in almost any format — the platform automatically maps your columns to the right fields using three-tier matching (exact, synonym, and fuzzy). A salesperson named "First Name" in your CRM maps correctly whether your export calls it "firstname", "given_name", or "customer first". Manual override is available for anything it can't resolve automatically.</p>
+                <div class="format-pills">
+                    <span class="format-pill">Excel (.xlsx / .xls)</span>
+                    <span class="format-pill">CSV</span>
+                    <span class="format-pill">JSON</span>
+                    <span class="format-pill">REST API</span>
+                </div>
             </div>
         </div>
     </section>
@@ -84,9 +330,12 @@
     <!-- Insights & Analytics -->
     <section class="section winloss-insights">
         <div class="container">
-            <h2>Insights & Analytics</h2>
-            <p>Collected data is securely analyzed and visualized through dashboards that highlight:</p>
-            
+            <div class="section-header">
+                <h2>Insights &amp; Analytics</h2>
+                <div class="section-divider"></div>
+            </div>
+            <p>Collected data is securely analysed and visualised through dashboards that highlight:</p>
+
             <div class="insights-grid">
                 <div class="insight-card">
                     <div class="insight-icon">📊</div>
@@ -96,7 +345,7 @@
                 <div class="insight-card">
                     <div class="insight-icon">💬</div>
                     <h3>Customer Feedback</h3>
-                    <p>Verbatim customer feedback with sentiment and theme analysis</p>
+                    <p>Verbatim customer feedback with AI-assisted sentiment and theme analysis</p>
                 </div>
                 <div class="insight-card">
                     <div class="insight-icon">🔍</div>
@@ -104,51 +353,67 @@
                     <p>Clear comparisons between what worked in wins and what failed in losses</p>
                 </div>
             </div>
-            
-            <p class="highlight-text">Optionally, Proteance provides expert‑led analysis and AI‑assisted insight generation, translating raw feedback into specific, prioritized recommendations for sales process improvement, coaching focus, pricing strategy, and customer experience design.</p>
+
+            <p class="highlight-text" style="margin-top:32px;">Optionally, Proteance provides expert-led analysis and AI-assisted insight generation, translating raw feedback into specific, prioritised recommendations for sales process improvement, coaching focus, pricing strategy, and customer experience design.</p>
         </div>
     </section>
 
-    <!-- Technical Integration -->
+    <!-- Integration & Infrastructure -->
     <section class="section winloss-integration">
         <div class="container">
-            <h2>Seamless Integration</h2>
-            <p>The platform integrates cleanly with Microsoft Dynamics while remaining operationally independent, allowing survey data to be securely managed outside the client CRM if desired—supporting subscription access, data residency requirements, and IP protection.</p>
-            <p class="highlight-text">The result: fewer blind spots, smarter process changes, and the ability to win back a meaningful percentage of deals that would otherwise be lost.</p>
+            <div class="section-header">
+                <h2>Enterprise-Grade Integration</h2>
+                <div class="section-divider"></div>
+            </div>
+            <p>The platform integrates cleanly with Microsoft Dynamics while remaining operationally independent — survey data can be securely managed outside the client CRM if desired, supporting subscription access, data residency requirements, and IP protection.</p>
+
+            <div class="feature-highlight" style="margin-top:28px;">
+                <h3>Zero Data Loss, Works Anywhere</h3>
+                <p>Every survey response is saved twice — to the cloud immediately, and locally on the customer's device as a fallback. If connectivity drops mid-survey, no responses are lost. Completion can happen on a showroom tablet, a customer's phone, or any device with a browser.</p>
+            </div>
+
+            <p style="margin-top:28px; color:#555; font-size:0.95rem;">Built on Microsoft Azure and designed for the requirements of multi-rooftop dealer groups:</p>
+            <div class="infra-strip">
+                <div class="infra-pill"><i class="fa-brands fa-microsoft"></i> Azure Cloud</div>
+                <div class="infra-pill"><i class="fa-solid fa-database"></i> Cosmos DB</div>
+                <div class="infra-pill"><i class="fa-solid fa-chart-line"></i> Application Insights</div>
+                <div class="infra-pill"><i class="fa-solid fa-lock"></i> Azure Key Vault</div>
+                <div class="infra-pill"><i class="fa-solid fa-shield-halved"></i> UAE Data Residency</div>
+            </div>
+
+            <p class="highlight-text" style="margin-top:32px;">The result: fewer blind spots, smarter process changes, and the ability to win back a meaningful percentage of deals that would otherwise be lost forever.</p>
         </div>
     </section>
 
     <!-- Why Different -->
-    <section class="section winloss-different">
+    <section class="section winloss-different" style="background:#f8f9fa;">
         <div class="container">
-            <h2>Why This Is Different from Generic Surveys</h2>
-            <p class="lead-text">Most survey tools are designed for marketing feedback or CSAT—they capture surface-level sentiment ("How was your experience?") without context, depth, or actionability.</p>
-            <p class="lead-text">Proteance Win–Loss Analysis is built specifically for post-decision insight in automotive retail. Here's how it stands apart:</p>
-            
+            <div class="section-header">
+                <h2>Why This Is Different from Generic Surveys</h2>
+                <div class="section-divider"></div>
+                <p style="color:#555; max-width:620px; margin:0 auto;">Most survey tools capture surface-level sentiment — "How was your experience?" — without context, depth, or actionability. This is built specifically for post-decision insight in automotive retail.</p>
+            </div>
+
             <div class="differentiators-grid">
                 <div class="differentiator-card">
                     <h3>🎯 Purpose-Built for Automotive Sales Journeys</h3>
-                    <p>Our surveys are tailored to key drop-off points in the dealership sales funnel—from inquiry to walkout to post-test drive—and are dynamically structured to follow up based on the customer's chosen reason for disengaging.</p>
+                    <p>Surveys are structured around the specific decision points in a dealership sales funnel — from inquiry to walkout to post-test drive — and follow up dynamically based on the customer's path. Not a generic form with a logo on it.</p>
                 </div>
-                
                 <div class="differentiator-card">
-                    <h3>🎮 Gamified for Honest Feedback</h3>
-                    <p>Instead of one-click checkboxes, we use an opt-in points and reward system that encourages customers to share deeper, more candid feedback—resulting in higher quality responses and better data.</p>
+                    <h3>🎮 Real Gamification, Not Just Sliders</h3>
+                    <p>An opt-in points and reward system is built into every survey. Customers see their points accumulate as they answer, incentivising more complete and candid responses. The mechanism is part of the product, not an afterthought.</p>
                 </div>
-                
                 <div class="differentiator-card">
                     <h3>⚖️ Comparative Focus: Wins vs. Losses</h3>
-                    <p>We don't just log reasons for lost deals. We compare what worked in wins vs what failed in losses, allowing you to see the process patterns that matter most.</p>
+                    <p>We don't just log why deals were lost. We compare what worked in wins against what failed in losses — so you can see the patterns that actually drive conversion, not just the complaints.</p>
                 </div>
-                
                 <div class="differentiator-card">
-                    <h3>🧠 Embedded Analysis, Not Just Forms</h3>
-                    <p>Raw feedback is processed into structured themes and linked back to CRM records and dealership stages. Optional AI-powered summaries and human-led analysis turn survey data into recommendations—not just dashboards.</p>
+                    <h3>🧠 AI Analysis, Not Just Dashboards</h3>
+                    <p>Raw feedback is processed into structured themes and linked back to CRM records and dealership stages. AI-powered summaries and optional human-led analysis turn survey data into recommendations — not just charts.</p>
                 </div>
-                
                 <div class="differentiator-card">
                     <h3>🔗 CRM-Aware, But Independent</h3>
-                    <p>Unlike CRM-bound survey modules, Proteance operates alongside Dynamics or other dealer systems—giving you full control of feedback data, secure multi-client deployment, and a subscription-based model that protects the integrity of your process.</p>
+                    <p>Operates alongside Dynamics or other dealer systems — giving you full control of feedback data, secure multi-client deployment, and a subscription-based model that keeps your process IP protected.</p>
                 </div>
             </div>
         </div>
@@ -158,7 +423,7 @@
     <section class="cta-section">
         <div class="container">
             <div class="cta-content">
-                <h2>Ready to Understand Why Customers Buy—or Walk Away?</h2>
+                <h2>Ready to Understand Why Customers Buy — or Walk Away?</h2>
                 <p>Learn how Proteance Win–Loss Analysis can help you turn lost deals into revenue growth</p>
                 <a href="index.html#contact" class="btn btn-large">Get in Touch</a>
             </div>
@@ -180,7 +445,7 @@
                         <li><a href="index.html#vision">Vision</a></li>
                         <li><a href="index.html#approach">Approach</a></li>
                         <li><a href="index.html#expertise">Expertise</a></li>
-                        <li><a href="index.html#products">Products & Services</a></li>
+                        <li><a href="index.html#products">Products &amp; Services</a></li>
                         <li><a href="about.html">About</a></li>
                     </ul>
                 </div>
